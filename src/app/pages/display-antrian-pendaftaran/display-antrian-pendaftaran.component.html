@@ -1,0 +1,32 @@
+<app-layout-display>
+    <div class="row px-2 mx-0 mt-3 mb-3">
+        <!-- Call Nomor Antrian -->
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ps-0">
+            <app-main-card [Model]="'Pendaftaran'" [Datasource]="MainCardDatasource"></app-main-card>
+        </div>
+
+        <!-- Video Statis -->
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 pe-0">
+            <app-frame-card #FrameCard></app-frame-card>
+        </div>
+    </div>
+
+    <div class="row px-0 mx-0 mb-2">
+        <!-- List Loket Lain -->
+        <div *ngFor="let item of OtherLoketDatasource" class="col px-2">
+            <app-secondary-card>
+                <p class="textOtherNamaLoket mb-0">
+                    {{ item.nama_loket_pelayanan }}
+                </p>
+                <p class="textOtherNoAntrian mb-0">
+                    {{ item.no_antrian }}
+                </p>
+                <p class="textOtherJenisLoket mb-0">
+                    {{ item.jenis_loket_pelayanan }}
+                </p>
+            </app-secondary-card>
+        </div>
+    </div>
+
+    <app-running-text></app-running-text>
+</app-layout-display>

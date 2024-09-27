@@ -1,0 +1,10 @@
+.cardLoket:hover {
+  transition: transform 250ms, opacity 400ms;
+  transform: translateY(-5px);
+}
+
+.cardPilihLoket {
+  height: calc(100vh - 19rem);
+  overflow-y: scroll;
+  background-color: transparent;
+}

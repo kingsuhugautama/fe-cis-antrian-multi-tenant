@@ -1,0 +1,12 @@
+p.heading {
+  color: var(--biru-muda);
+  font-size: 3rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (min-width: 1919.98px) {
+  p.heading {
+    font-size: 3.5rem;
+  }
+}

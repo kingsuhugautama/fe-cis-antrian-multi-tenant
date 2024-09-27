@@ -1,0 +1,67 @@
+<!-- Button trigger modal -->
+<button id="btnModalPilihPoli" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop" [hidden]="true">
+    Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header text-white p-2" style="background-color: #006d9f;">
+                <h3 class="modal-title" id="staticBackdropLabel">
+                    Pilih {{ State | titlecase }}
+                    <span *ngIf="State == 'dokter'">
+                        {{ SelectedPoli.nama_poli }}
+                    </span>
+                </h3>
+                <button id="btnCloseModalPilihPoli" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body modalBodyPilihPoli">
+                <div *ngIf="State == 'poliklinik'" class="row px-0 mx-0">
+                    <div *ngFor="let item of PoliklinikDatasource"
+                        class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-3 cursor-pointer" (click)="onSavedPoli(item)">
+                        <div class="card border-0 shadow-sm border-radius-20 background-biru-muda">
+                            <div class="card-body px-2 cardBodyNamaPoli">
+                                <div class="row h-100 align-items-center">
+                                    <div class="col-12 text-center">
+                                        <p class="text-white mb-0 textNamaPoli">
+                                            {{ item.nama_poli }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="State == 'dokter'" class="row px-0 mx-0">
+                    <div *ngFor="let item of DokterDatasource"
+                        class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-3 cursor-pointer" (click)="onSavedDokter(item)">
+                        <div class="card border-0 shadow-sm border-radius-20 background-biru-muda">
+                            <div class="card-body px-2 cardBodyNamaDokter">
+                                <div class="row h-100 align-items-center">
+                                    <div class="col-12 text-center">
+                                        <p class="text-white mb-2 textNamaPoli"
+                                            style="padding-bottom: 10px; border-bottom: 1px dashed;">
+                                            {{ item.nama_dokter }}
+                                        </p>
+                                        <p class="text-white mb-1" style="font-size: 20px; line-height: 1;">
+                                            {{ item.jam_mulai }} - {{ item.jam_selesai }}
+                                        </p>
+                                        <p class="text-white mb-0" style="font-size: 20px; line-height: 1;">
+                                            Sisa Kuota : {{ item.kuota }} Pasien
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

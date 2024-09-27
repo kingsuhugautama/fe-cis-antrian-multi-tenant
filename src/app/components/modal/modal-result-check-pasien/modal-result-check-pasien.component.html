@@ -1,0 +1,139 @@
+<!-- Modal Pilih Pasien Lama or Baru for BPJS -->
+<button id="btnModalResultCheckPasien" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#staticBackdropResultCheckPasien" [hidden]="true">
+    Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdropResultCheckPasien" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropResultCheckLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-body modalBodyPilihPoli">
+                <div class="row" style="padding-top: 5%">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4 pb-4" style="border-bottom: 2px dashed">
+                        <h1 class="text-center">
+                            Apakah Data Diri Anda Sudah Sesuai?
+                        </h1>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                <h2 class="mb-0">
+                                    No. RM :
+                                </h2>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h2 class="mb-0">
+                                    {{ DataPasien?.no_rekam_medis ? DataPasien?.no_rekam_medis : '' }}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                <h2 class="mb-0">
+                                    NIK :
+                                </h2>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h2 class="mb-0">
+                                    {{ DataPasien?.no_identitas ? DataPasien?.no_identitas : '' }}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                <h2 class="mb-0">
+                                    Nama Pasien :
+                                </h2>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h2 class="mb-0">
+                                    {{ DataPasien?.full_name ? DataPasien?.full_name : '' }}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                <h2 class="mb-0">
+                                    Tempat Lahir :
+                                </h2>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h2 class="mb-0">
+                                    {{ DataPasien?.tempat_lahir ? DataPasien?.tempat_lahir : '' }}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                <h2 class="mb-0">
+                                    Tanggal Lahir :
+                                </h2>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h2 class="mb-0">
+                                    {{ DataPasien?.tanggal_lahir ? convertDate(DataPasien?.tanggal_lahir) : '' }}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                <h2 class="mb-0">
+                                    Debitur :
+                                </h2>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h2 class="mb-0">
+                                    {{ DataPasien?.debitur ? DataPasien?.debitur : '' }}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-end">
+                                <h2 class="mb-0">
+                                    No. Kartu BPJS :
+                                </h2>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h2 class="mb-0">
+                                    {{ DataPasien?.no_kartu ? DataPasien?.no_kartu : '' }}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-flex gap-4 justify-content-center mt-4">
+                        <button id="btnCloseModalResultCheckPasien" class="btn btn-secondary btn-lg" type="button"
+                            data-bs-dismiss="modal">
+                            Kembali
+                        </button>
+
+                        <button class="btn btn-primary btn-lg" type="button" (click)="handleClickLanjutkan()">
+                            Lanjutkan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

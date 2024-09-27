@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+        <div class="card background-biru-muda shadow cardMenujuLoket border-0">
+            <div class="card-body p-1">
+                <p *ngIf="Model === 'Pendaftaran'" class="textMenujuLoket mb-0">
+                    {{ Datasource.nama_loket_pelayanan }}
+                </p>
+                <p *ngIf="Model === 'Poliklinik'" class="textMenujuLoket mb-0">
+                    {{ Datasource.nama_poli }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 {{ Model == 'Pendaftaran' ? 'mb-0' : 'mb-3' }}">
+        <div class="card background-biru-muda shadow cardMenujuLoket border-0">
+            <div class="card-body p-0">
+                <p class="textNomorAntrian mb-0">
+                    NOMOR ANTRIAN
+                </p>
+                <p class="textNomorAntrianKe mb-0">
+                    {{ Datasource.no_antrian }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="Model == 'Poliklinik'" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card background-biru-muda shadow cardMenujuLoket border-0">
+            <div class="card-body p-0">
+                <p class="textNomorAntrian mb-0">
+                    NAMA PASIEN
+                </p>
+                <p class="textNamaPasien mb-0">
+                    {{ Datasource.nama_pasien }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

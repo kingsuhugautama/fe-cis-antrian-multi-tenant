@@ -1,0 +1,92 @@
+<app-layout-loket>
+    <div class="container pt-3">
+        <!-- Welcome Back -->
+        <div class="row px-0 mx-0 mb-3">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4 class="text-hitam mb-0">Selamat Datang, {{ UserName }}</h4>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="row justify-content-center align-items-center px-0 mx-0 mb-3">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="card bg-white shadow border-0 border-radius-20">
+                    <div class="card-body">
+                        <p class="text-abu-tua mb-0">Total Pasien Terlayani</p>
+                        <h4 class="text-biru-muda mb-0"> {{ TotalPelayanan }} Pasien</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="card bg-white shadow border-0 border-radius-20">
+                    <div class="card-body">
+                        <p class="text-abu-tua mb-0">Total Pasien Terlayani Hari Ini</p>
+                        <h4 class="text-biru-muda mb-0">{{ TotalPelayananDaily }} Pasien</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="card bg-white shadow border-0 border-radius-20">
+                    <div class="card-body">
+                        <p class="text-abu-tua mb-0">Total Menit Pelayanan Hari Ini</p>
+                        <h4 class="text-biru-muda mb-0"> {{ MinutesPelayanan | number: '1.2-2' }} Menit</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loket -->
+        <div class="row justify-content-center align-items-center px-0 mx-0">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-end">
+                <img src="../../../assets/image/choose.svg" alt="" height="300">
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="row mb-3">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                        <h5 class="text-hitam mb-0">Pilih {{ Mode == 'Pendaftaran' ? 'Loket' : 'Poliklinik' }}</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div *ngIf="Mode === 'Pendaftaran'; else ModePoliklinik"
+                        class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card border-0 shadow-sm cardPilihLoket">
+                            <div class="card-body">
+                                <div *ngFor="let item of AvailableLoketPendaftaran" class="row mb-3 cursor-pointer">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card background-biru-muda shadow-sm border-0 border-radius-20 cardLoket"
+                                            (click)="onChooseLoket(item)">
+                                            <div class="card-body">
+                                                <h5 class="text-white mb-0 fw-bold text-center">
+                                                    {{ item.nama_loket_pelayanan }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #ModePoliklinik class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card border-0 shadow-sm cardPilihLoket">
+                            <div class="card-body">
+                                <div *ngFor="let item of AvailableLoketPoliklinik" class="row mb-3 cursor-pointer">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card background-biru-muda shadow-sm border-0 border-radius-20 cardLoket"
+                                            (click)="onChoosePoliklinik(item)">
+                                            <div class="card-body">
+                                                <h5 class="text-white mb-0 fw-bold text-center">
+                                                    {{ item.nama_poli }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</app-layout-loket>

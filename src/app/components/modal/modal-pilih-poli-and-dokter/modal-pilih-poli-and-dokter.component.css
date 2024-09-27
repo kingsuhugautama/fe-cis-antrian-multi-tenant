@@ -1,0 +1,21 @@
+.modalBodyPilihPoli {
+  overflow-y: scroll;
+}
+
+.cardBodyNamaPoli {
+  height: 5rem;
+}
+
+.cardBodyNamaDokter {
+  height: 8rem;
+}
+
+.card:hover {
+  transition: transform 250ms, opacity 400ms;
+  transform: translateY(-5px);
+}
+
+p.textNamaPoli {
+  font-size: 25px;
+  line-height: 1;
+}

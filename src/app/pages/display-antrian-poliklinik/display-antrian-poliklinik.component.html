@@ -1,0 +1,14 @@
+<app-layout-display>
+    <div class="row px-2 mx-0 my-3" data-aos="fade-right">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <app-main-card [Model]="'Poliklinik'" [Datasource]="MainCardDatasource"></app-main-card>
+        </div>
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+            <app-list-card [NamaPoli]="MainCardDatasource?.nama_poli" [GridColumn]="GridColumnAntrianPoli"
+                [GridDatasource]="GridDatasourceAntrianPoli">
+            </app-list-card>
+        </div>
+    </div>
+
+    <app-running-text></app-running-text>
+</app-layout-display>

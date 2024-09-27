@@ -1,0 +1,741 @@
+<app-layout>
+    <div class="row px-0 mx-0 rowCetakTiket" *ngIf="!showContent" data-aos="fade-right">
+        <!-- Heading -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+            <app-heading [heading]="'Pilih Jenis Antrian'"></app-heading>
+        </div>
+
+        <!-- Jenis Pendaftaran -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+            <div *ngFor="let item of JenisAntrianDatasource" class="row justify-content-center mb-5 cursor-pointer">
+                <div class="{{ screenClass }}">
+                    <div class="card shadow border-left-abu-muda {{ item.jenis_loket_pelayanan === 'CHECK IN' ? 'background-kuning-muda' : 'background-biru-muda'}}"
+                        (click)="onChooseJenisAntrian(item)">
+                        <div class="card-body" style="border-radius: 15px;">
+                            <p
+                                class="jenisAntrian text-center {{ item.jenis_loket_pelayanan == 'CHECK IN' ? 'text-dark' : 'text-white' }} mb-0">
+                                {{ item.jenis_loket_pelayanan }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Umum -->
+    <div class="row px-0 mx-0 rowPrintCetakTiket align-items-center justify-content-center"
+        *ngIf="showContent && JenisAntrian.jenis_loket_pelayanan === 'UMUM'" data-aos="fade-right">
+        <!-- Heading -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+            <app-heading [heading]="'Jumlah Antrian ' + JenisAntrian.jenis_loket_pelayanan"></app-heading>
+
+            <p style="font-size: 25px; text-align: center;">
+                Poliklinik :
+                <span style="font-weight: 600;">
+                    {{ SelectedDataPoliAndDokter.nama_poli }}
+                </span>
+                <br>
+                Dokter :
+                <span style="font-weight: 600;">
+                    {{ SelectedDataPoliAndDokter.nama_dokter }}
+                </span>
+
+                <span class="p-2 bg-warning text-dark rounded-3 ms-3" style="cursor: pointer;"
+                    (click)="handleClickUbahDokterAndPoli(false)">
+                    Ubah
+                </span>
+            </p>
+        </div>
+
+        <!-- Nomor Antrian -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row justify-content-center mb-5 cursor-pointer">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="card borderNomorAntrian border-biru-muda background-abu-muda">
+                        <div class="card-body h-100">
+                            <div class="row h-100 align-items-center">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="nomorAntrian text-center text-black mb-0">
+                                        {{ NomorAntrian }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cetak -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3">
+                    <h3 class="text-warning mb-0">
+                        Apakah Anda Ingin Cetak No. Antrian ?
+                    </h3>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                    <button class="btn btn-danger btn-lg" type="button" (click)="showContent = !showContent">
+                        Tidak
+                    </button>
+                </div>
+
+                <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                    <button class="btn btn-primary btn-lg" type="button"
+                        (click)="onCetakNoAntrian(NomorAntrian, JenisAntrian)">
+                        Cetak
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BPJS -->
+    <div class="row px-0 mx-0 rowPrintCetakTiket align-items-center justify-content-center"
+        *ngIf="showContent && JenisAntrian.jenis_loket_pelayanan === 'BPJS'" data-aos="fade-right">
+        <div *ngIf="IsPasienLamaBpjs" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <!-- Heading -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                <app-heading [heading]="'Jumlah Antrian ' + JenisAntrian.jenis_loket_pelayanan"></app-heading>
+
+                <p *ngIf="SelectedDataPoliAndDokter" style="font-size: 25px; text-align: center;">
+                    Poliklinik :
+                    <span style="font-weight: 600;">
+                        {{ SelectedDataPoliAndDokter.nama_poli }}
+                    </span>
+                    <br>
+                    Dokter :
+                    <span style="font-weight: 600;">
+                        {{ SelectedDataPoliAndDokter.nama_dokter }}
+                    </span>
+
+                    <span class="p-2 bg-warning text-dark rounded-3 ms-3" style="cursor: pointer;"
+                        (click)="handleClickUbahDokterAndPoli(true)">
+                        Ubah
+                    </span>
+                </p>
+            </div>
+
+            <!-- Nomor Antrian -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row justify-content-center mb-5 cursor-pointer">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="card borderNomorAntrian border-biru-muda background-abu-muda">
+                            <div class="card-body h-100">
+                                <div class="row h-100 align-items-center">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p class="nomorAntrian text-center text-black mb-0">
+                                            {{ NomorAntrian }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="IsPasienLamaBpjs" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                    <div class="row mb-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                            <p class="mb-0" style="font-size: 25px;">
+                                Cari Berdasarkan :
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row gap-3">
+                        <div class="col-auto p-0">
+                            <span class="numberPad {{ Type == 'NIK' ? '' : 'bg-secondary' }} shadow-sm py-2 px-3"
+                                (click)="Type = 'NIK'">
+                                NIK
+                            </span>
+                        </div>
+                        <div class="col-auto p-0">
+                            <span class="numberPad  {{ Type == 'NO_KARTU' ? '' : 'bg-secondary' }} shadow-sm py-2 px-3"
+                                (click)="Type = 'NO_KARTU'">
+                                No. Kartu BPJS
+                            </span>
+                        </div>
+                        <div class="col-auto p-0">
+                            <span class="numberPad  {{ Type == 'NO_RM' ? '' : 'bg-secondary' }} shadow-sm py-2 px-3"
+                                (click)="Type = 'NO_RM'">
+                                No. Rekam Medis
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No Rujukan -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4 px-0">
+                    <!-- <input class="form-control" [(ngModel)]="NoRujukan"> -->
+                    <h1 class="text-dark text-center"
+                        [innerHTML]="NoRujukan ? NoRujukan : (Type == 'NIK' ? 'Ketik NIK Anda' : ( Type == 'NO_RM' ? 'Ketik No. Rekam Medis Anda' : 'Ketik No. Kartu BPJS Anda'))">
+                    </h1>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                    <div class="row justify-content-center gap-3 mb-3">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('1')">
+                                1
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('2')">
+                                2
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('3')">
+                                3
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center gap-3 mb-3">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('4')">
+                                4
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('5')">
+                                5
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('6')">
+                                6
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center gap-3 mb-3">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('7')">
+                                7
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('8')">
+                                8
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('9')">
+                                9
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center gap-3 mb-3">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('-')">
+                                -
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('0')">
+                                0
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('.')">
+                                .
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center gap-3 mb-3">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm bg-secondary" (click)="deleteChar()">
+                                <i class="fas fa-chevron-left"></i>
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <!-- <span class="numberPad shadow-sm " (click)="typeNumpad('0')">
+                                0
+                            </span> -->
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm bg-success"
+                                (click)="handleCheckNoRujukan(NoRujukan, Type)">
+                                OK
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cetak -->
+                <div *ngIf="!ResultNoRujukan" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                            <button class="btn btn-danger btn-lg" type="button" (click)="showContent = !showContent">
+                                Kembali
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cetak -->
+                <div *ngIf="ResultNoRujukan" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3">
+                            <h3 class="text-warning mb-0">
+                                Apakah Anda Ingin Cetak No. Antrian ?
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                            <button class="btn btn-danger btn-lg" type="button"
+                                (click)="showContent = !showContent">Tidak</button>
+                        </div>
+                        <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" type="button"
+                                (click)="onCetakNoAntrian(NomorAntrian, JenisAntrian)">
+                                Cetak
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!IsPasienLamaBpjs" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <!-- Heading -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                <app-heading [heading]="'Jumlah Antrian ' + JenisAntrian.jenis_loket_pelayanan"></app-heading>
+
+                <p *ngIf="SelectedDataPoliAndDokter" style="font-size: 25px; text-align: center;">
+                    Poliklinik :
+                    <span style="font-weight: 600;">
+                        {{ SelectedDataPoliAndDokter.nama_poli }}
+                    </span>
+                    <br>
+                    Dokter :
+                    <span style="font-weight: 600;">
+                        {{ SelectedDataPoliAndDokter.nama_dokter }}
+                    </span>
+
+                    <span class="p-2 bg-warning text-dark rounded-3 ms-3" style="cursor: pointer;"
+                        (click)="handleClickUbahDokterAndPoli(true)">
+                        Ubah
+                    </span>
+                </p>
+            </div>
+
+            <!-- Nomor Antrian -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row justify-content-center mb-5 cursor-pointer">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="card borderNomorAntrian border-biru-muda background-abu-muda">
+                            <div class="card-body h-100">
+                                <div class="row h-100 align-items-center">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p class="nomorAntrian text-center text-black mb-0">
+                                            {{ NomorAntrian }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!IsPasienLamaBpjs" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="row">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row mb-2">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0 text-center">
+                                <p class="mb-0" style="font-size: 25px;">
+                                    Ketik NIK Anda :
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- No Rujukan -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4 px-0">
+                        <!-- <input class="form-control" [(ngModel)]="NoRujukan"> -->
+                        <h1 class="text-dark text-center"
+                            [innerHTML]="NoRujukan ? NoRujukan : (Type == 'NIK' ? '' : ( Type == 'NO_RM' ? 'Ketik No. Rekam Medis Anda' : 'Ketik No. Kartu BPJS Anda'))">
+                        </h1>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                        <div class="row justify-content-center gap-3 mb-3">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('1')">
+                                    1
+                                </span>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('2')">
+                                    2
+                                </span>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('3')">
+                                    3
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center gap-3 mb-3">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('4')">
+                                    4
+                                </span>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('5')">
+                                    5
+                                </span>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('6')">
+                                    6
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center gap-3 mb-3">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('7')">
+                                    7
+                                </span>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('8')">
+                                    8
+                                </span>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('9')">
+                                    9
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center gap-3 mb-3">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('-')">
+                                    -
+                                </span>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('0')">
+                                    0
+                                </span>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm " (click)="typeNumpad('.')">
+                                    .
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center gap-3 mb-3">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm bg-secondary" (click)="deleteChar()">
+                                    <i class="fas fa-chevron-left"></i>
+                                </span>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <!-- <span class="numberPad shadow-sm " (click)="typeNumpad('0')">
+                                    0
+                                </span> -->
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                                <span class="numberPad shadow-sm bg-success"
+                                    (click)="handleCheckNoRujukan(NoRujukan, Type)">
+                                    OK
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cetak -->
+                    <div *ngIf="!ResultNoRujukan" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                                <button class="btn btn-danger btn-lg" type="button"
+                                    (click)="showContent = !showContent">
+                                    Kembali
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IGD -->
+    <div class="row px-0 mx-0 rowPrintCetakTiket align-items-center justify-content-center"
+        *ngIf="showContent && JenisAntrian.jenis_loket_pelayanan === 'IGD'" data-aos="fade-right">
+        <!-- Heading -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+            <app-heading [heading]="'Jumlah Antrian ' + JenisAntrian.jenis_loket_pelayanan"></app-heading>
+        </div>
+
+        <!-- Nomor Antrian -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row justify-content-center mb-5 cursor-pointer">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="card borderNomorAntrian border-biru-muda background-abu-muda">
+                        <div class="card-body h-100">
+                            <div class="row h-100 align-items-center">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="nomorAntrian text-center text-black mb-0">
+                                        {{ NomorAntrian }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cetak -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3">
+                    <h3 class="text-warning mb-0">
+                        Apakah Anda Ingin Cetak No. Antrian ?
+                    </h3>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                    <button class="btn btn-danger btn-lg" type="button" (click)="showContent = !showContent">
+                        Tidak
+                    </button>
+                </div>
+
+                <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                    <button class="btn btn-primary btn-lg" type="button"
+                        (click)="onCetakNoAntrian(NomorAntrian, JenisAntrian)">
+                        Cetak
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDER PENUNJANG -->
+    <div class="row px-0 mx-0 rowPrintCetakTiket align-items-center justify-content-center"
+        *ngIf="showContent && JenisAntrian.jenis_loket_pelayanan === 'ORDER PENUNJANG'" data-aos="fade-right">
+        <!-- Heading -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+            <app-heading [heading]="'Jumlah Antrian ' + JenisAntrian.jenis_loket_pelayanan"></app-heading>
+        </div>
+
+        <!-- Nomor Antrian -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row justify-content-center mb-5 cursor-pointer">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="card borderNomorAntrian border-biru-muda background-abu-muda">
+                        <div class="card-body h-100">
+                            <div class="row h-100 align-items-center">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p class="nomorAntrian text-center text-black mb-0">
+                                        {{ NomorAntrian }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cetak -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3">
+                    <h3 class="text-warning mb-0">
+                        Apakah Anda Ingin Cetak No. Antrian ?
+                    </h3>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                    <button class="btn btn-danger btn-lg" type="button" (click)="showContent = !showContent">
+                        Tidak
+                    </button>
+                </div>
+
+                <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                    <button class="btn btn-primary btn-lg" type="button"
+                        (click)="onCetakNoAntrian(NomorAntrian, JenisAntrian)">
+                        Cetak
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Check In -->
+    <div class="row px-0 mx-0 rowPrintCetakTiket align-items-center justify-content-center"
+        *ngIf="showContent && JenisAntrian.jenis_loket_pelayanan === 'CHECK IN'" data-aos="fade-right">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="row">
+                <!-- No Rujukan -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                    <label class="form-check-label" for="TypeNik">Kode Booking</label>
+                    <input class="form-control" [(ngModel)]="Kodebooking">
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                    <div class="row justify-content-center gap-3 mb-3">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('1')">
+                                1
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('2')">
+                                2
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('3')">
+                                3
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center gap-3 mb-3">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('4')">
+                                4
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('5')">
+                                5
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('6')">
+                                6
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center gap-3 mb-3">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('7')">
+                                7
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('8')">
+                                8
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('9')">
+                                9
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center gap-3 mb-3">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm bg-secondary" (click)="deleteChar()">
+                                <i class="fas fa-chevron-left"></i>
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm " (click)="typeNumpad('0')">
+                                0
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-0">
+                            <span class="numberPad shadow-sm bg-success" (click)="handleCheckKodeBooking(Kodebooking)">
+                                OK
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cetak -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3">
+                            <h3 class="text-warning mb-0">
+                                Apakah Anda Ingin Cetak No. Antrian ?
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                            <button class="btn btn-danger btn-lg" type="button"
+                                (click)="showContent = !showContent">Tidak</button>
+                        </div>
+                        <div class="col-lg-2 col-md-1 col-sm-1 col-xs-1 text-center mb-3 d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" type="button"
+                                (click)="onCetakNoAntrian(NomorAntrian, JenisAntrian)" [disabled]="!ResultNoRujukan">
+                                Cetak
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Modal Pilih and Dokter for UMUM -->
+    <app-modal-pilih-poli-and-dokter #ModalPilihPoliAndDokterComps
+        (onSavePoliAndDokter)="handleChoosePoliAndDokter($event)">
+    </app-modal-pilih-poli-and-dokter>
+
+    <!-- Modal Pilih Pasien Lama or Baru for BPJS -->
+    <button id="btnModalPilihJenisPasien" type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#staticBackdropJenisPasien" [hidden]="true">
+        Launch static backdrop modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdropJenisPasien" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropJenisPasienLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-body modalBodyPilihPoli">
+                    <div class="row" style="padding-top: 23%">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                            <h1 class="text-center">
+                                Apakah Anda Pasien Baru atau Pasien Lama?
+                            </h1>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-flex gap-4 justify-content-center">
+                            <button id="btnCloseModalJenisPasien" class="btn btn-secondary btn-lg" type="button"
+                                data-bs-dismiss="modal">
+                                Kembali
+                            </button>
+                            <button class="btn btn-danger btn-lg" type="button"
+                                (click)="handleChooseJenisPasienForBpjs(false)">
+                                Pasien Baru
+                            </button>
+                            <button class="btn btn-primary btn-lg" type="button"
+                                (click)="handleChooseJenisPasienForBpjs(true)">
+                                Pasien Lama
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-modal-result-check-pasien #ModalResultCheckPasienComps
+        (onClickLanjutkan)="handleClickLanjutkanResultPasien($event)">
+    </app-modal-result-check-pasien>
+</app-layout>
+
+<app-display-cetak-tiket-pendaftaran #pdfContent [NoAntrian]="NoAntrianForPrint" [SisaAntrian]="SisaAntrianForPrint">
+</app-display-cetak-tiket-pendaftaran>

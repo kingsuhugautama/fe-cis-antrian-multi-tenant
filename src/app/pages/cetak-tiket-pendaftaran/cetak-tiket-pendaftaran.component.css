@@ -1,0 +1,71 @@
+.rowCetakTiket {
+  padding-top: 2.5rem;
+}
+
+.rowPrintCetakTiket {
+  padding-top: 2.5rem;
+}
+
+.borderNomorAntrian {
+  border-radius: 50%;
+  height: 18rem;
+  max-height: 18rem;
+}
+
+p.jenisAntrian {
+  font-size: 2.5rem;
+}
+
+p.nomorAntrian {
+  font-size: 5rem;
+  font-weight: 600;
+}
+
+@media (max-width: 1080px) and (orientation: portrait) {
+  .rowCetakTiket {
+    padding-top: 20rem;
+  }
+
+  .rowPrintCetakTiket {
+    padding-top: 20rem;
+  }
+}
+
+@media (min-width: 1366.98px) and (orientation: landscape) {
+  .rowCetakTiket {
+    padding-top: 5rem;
+  }
+
+  .rowPrintCetakTiket {
+    padding-top: 5rem;
+  }
+
+  p.nomorAntrian {
+    font-size: 10rem;
+    font-weight: 600;
+  }
+
+  .borderNomorAntrian {
+    border-radius: 50%;
+    height: 26rem;
+    max-height: 26rem;
+  }
+}
+
+.numberPad {
+  text-align: center;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  background-color: rgb(14 165 233);
+}
+
+.numberPad:hover,
+.numberPad:focus {
+  background-color: rgb(7 89 133);
+}

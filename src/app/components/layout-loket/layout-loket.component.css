@@ -1,0 +1,42 @@
+a.brand-logo {
+  width: 4.5em;
+  max-width: 4.5em;
+  text-align: center;
+}
+
+#imgBrandNavbar {
+  height: 1.5rem;
+  max-height: 1.5rem;
+}
+
+img.img-logout {
+  height: 1.25em;
+  max-height: 1.25em;
+  width: 1.25em;
+  max-width: 1.25em;
+  padding: 0.2em;
+  border: 1px solid white;
+  background-color: white;
+  border-radius: 5px;
+  margin-right: 5px;
+  margin-top: -3px;
+}
+
+.imgBrandNavbarLoket {
+  height: 2rem;
+  max-height: 2rem;
+}
+
+.textTimeLoket {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.textDateLoket {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.rowTextTimeLoket {
+  margin-bottom: -10px !important;
+}

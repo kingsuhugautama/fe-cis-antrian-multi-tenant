@@ -1,0 +1,38 @@
+<section id="displayCetakTiket" class="p-2">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3 pb-3 border-bottom border-dark">
+            <p class="mb-0">
+                FASKES TINGKAT LANJUT
+            </p>
+
+            <p class="mb-0">
+                RSUD KELAS D BANTAR GEBANG
+            </p>
+
+            <p class="mb-0" style="font-size: 12px">
+                {{ Date | date: 'dd/MM/yyyy HH:mm:ss' }}
+            </p>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3 pb-3 border-bottom border-dark">
+            <p class="mb-0" style="font-size: 45px; font-weight: 900;">
+                {{ NoAntrian }}
+            </p>
+            <p class="mb-0">
+                Admisi
+            </p>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-3">
+            <p class="mb-2">
+                Sisa antrean : {{ SisaAntrian }}
+            </p>
+
+            <p class="mb-0 text-center" style="font-size: 11px; font-style: italic;">
+                *) Silahkan mengambil nomor antrian baru
+                <br>
+                jika nomor antrian terlewatkan
+            </p>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,8 @@
+.textNoAntrianSaatIni {
+  font-size: 7rem;
+  text-align: center;
+  font-weight: 600;
+  color: white;
+  background-color: var(--hitam) !important;
+  border-radius: 20px;
+}

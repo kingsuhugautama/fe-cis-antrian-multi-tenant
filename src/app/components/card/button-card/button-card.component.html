@@ -1,0 +1,8 @@
+<div class="card {{ ButtonDisabled ? 'background-biru-muda cursor-disabled' : 'background-biru-tua cursor-pointer' }}  border-0 border-radius-20 shadow "
+    (click)="ButtonDisabled ? null : onClicked($event)">
+    <div class="card-body p-1">
+        <p class="buttonText text-center py-2 mb-0">
+            <i class="fas fa-{{ ButtonIcon }} fa-sm"></i> {{ ButtonText }}
+        </p>
+    </div>
+</div>

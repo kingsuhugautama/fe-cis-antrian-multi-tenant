@@ -1,0 +1,255 @@
+@import "../node_modules/@syncfusion/ej2-base/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2-calendars/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2-dropdowns/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2-angular-grids/styles/bootstrap5.css";
+
+body {
+  font-family: "Cabin", sans-serif !important;
+  background-color: #f6f4f7 !important;
+  overflow-y: hidden !important;
+}
+
+:root {
+  --biru-muda: #00afff;
+  --biru-tua: #0d6efd;
+  --hitam: #051e34;
+  --hitam-muda: #637280;
+  --abu-muda: #cbd1d6;
+  --abu-tua: #9f9f9f;
+  --putih-tua: #f9f9fa;
+  --hijau-muda: #00ff7a;
+  --hijau-tua: #009f4c;
+  --kuning-muda: #fff212;
+  --kuning-tua: #9f9b00;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-disabled {
+  cursor: not-allowed !important;
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.font-cabin {
+  font-family: "Cabin", sans-serif;
+}
+
+/* ======= Style Biru Muda */
+.text-biru-muda {
+  color: var(--biru-muda) !important;
+}
+
+.background-biru-muda {
+  background-color: var(--biru-muda) !important;
+}
+
+.border-biru-muda {
+  border: 0.25em solid var(--biru-muda) !important;
+}
+
+.border-top-biru-muda {
+  border-top: 0.25em solid var(--biru-muda) !important;
+}
+
+.border-left-biru-muda {
+  border-left: 0.25em solid var(--biru-muda) !important;
+}
+
+/* ======= Style Biru Tua */
+.text-biru-tua {
+  color: var(--biru-tua) !important;
+}
+
+.background-biru-tua {
+  background-color: var(--biru-tua) !important;
+}
+
+.border-top-biru-tua {
+  border-top: 0.25em solid var(--biru-tua) !important;
+}
+
+.border-left-biru-tua {
+  border-left: 0.25em solid var(--biru-tua) !important;
+}
+
+/* ====== Style Hitam */
+.text-hitam {
+  color: var(--hitam) !important;
+}
+
+.text-hitam-muda {
+  color: var(--hitam-muda) !important;
+}
+
+/* ====== Style Abu Muda */
+.text-abu-muda {
+  color: var(--abu-muda) !important;
+}
+
+.background-abu-muda {
+  background-color: var(--abu-muda) !important;
+}
+
+.border-top-abu-muda {
+  border-top: 0.25em solid var(--abu-muda) !important;
+}
+
+.border-left-abu-muda {
+  border-left: 0.5em solid var(--abu-muda) !important;
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-radius: 15px !important;
+}
+
+/* ====== Style Abu Muda */
+.text-abu-tua {
+  color: var(--abu-tua) !important;
+}
+
+.background-abu-tua {
+  background-color: var(--abu-tua) !important;
+}
+
+.border-top-abu-tua {
+  border-top: 0.25em solid var(--abu-tua) !important;
+}
+
+/* ===== Style Ungu Tua */
+.text-ungu-tua {
+  color: #432158 !important;
+}
+
+.background-ungu-tua {
+  background-color: #432158 !important;
+}
+
+.border-left-ungu-tua {
+  border-left: 0.25em solid #432158 !important;
+}
+
+.border-top-ungu-tua {
+  border-top: 0.25em solid #432158 !important;
+}
+
+/* ===== Style Kuning Muda */
+.background-kuning-muda {
+  background-color: var(--kuning-muda) !important;
+}
+
+.text-kuning-muda {
+  color: var(--kuning-muda) !important;
+}
+
+.border-radius-20 {
+  border-radius: 20px !important;
+}
+
+.e-grid * {
+  font-family: "Cabin", sans-serif !important;
+}
+
+.e-grid .e-headercelldiv {
+  height: 60px !important;
+  line-height: 60px !important;
+  font-size: 40px !important;
+}
+
+th.e-headercell {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  color: black !important;
+  border: 1px solid rgba(0, 0, 0, 0.125) !important;
+}
+
+td.e-rowcell {
+  font-size: 40px !important;
+  padding-left: 15px !important;
+}
+
+@media (max-width: 1366.98px) and (orientation: landscape) {
+  .e-grid .e-headercelldiv {
+    height: 60px !important;
+    line-height: 60px !important;
+    font-size: 40px !important;
+  }
+
+  td.e-rowcell {
+    font-size: 40px !important;
+    padding-left: 15px !important;
+  }
+}
+
+@media (min-width: 1920px) and (max-width: 2132.98px) {
+  .e-grid .e-headercelldiv {
+    height: 60px !important;
+    line-height: 60px !important;
+    font-size: 40px !important;
+  }
+
+  td.e-rowcell {
+    font-size: 40px !important;
+    padding-left: 15px !important;
+  }
+}
+
+@media (min-width: 2133px) and (max-width: 2399.98px) {
+  .e-grid .e-headercelldiv {
+    height: 60px !important;
+    line-height: 60px !important;
+    font-size: 45px !important;
+  }
+
+  td.e-rowcell {
+    font-size: 45px !important;
+    padding-left: 15px !important;
+  }
+}
+
+@media (min-width: 2400px) and (max-width: 2559.98px) {
+  .e-grid .e-headercelldiv {
+    height: 60px !important;
+    line-height: 60px !important;
+    font-size: 50px !important;
+  }
+
+  td.e-rowcell {
+    font-size: 50px !important;
+    padding-left: 15px !important;
+  }
+}
+
+@media (min-width: 2560px) and (max-width: 2879.98px) {
+  .e-grid .e-headercelldiv {
+    height: 60px !important;
+    line-height: 60px !important;
+    font-size: 55px !important;
+  }
+
+  td.e-rowcell {
+    font-size: 55px !important;
+    padding-left: 15px !important;
+  }
+}
+
+@media (min-width: 2880px) and (max-width: 3839.98px) {
+  .e-grid .e-headercelldiv {
+    height: 60px !important;
+    line-height: 60px !important;
+    font-size: 60px !important;
+  }
+
+  td.e-rowcell {
+    font-size: 60px !important;
+    padding-left: 15px !important;
+  }
+}

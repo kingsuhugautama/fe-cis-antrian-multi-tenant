@@ -1,0 +1,253 @@
+<app-layout-loket data-aos="fade-right">
+    <div class="row align-items-center px-0 mx-0">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <!-- Current Serving Div's -->
+            <div class="row mb-3">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card border-top-biru-muda border-radius-20 shadow">
+                        <div class="card-body">
+                            <div class="row align-items-center justify-content-center h-100 px-0 mx-0">
+                                <!-- Text Choosen Loket -->
+                                <div *ngIf="ChoosenLoket"
+                                    class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-4">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 cursor-pointer"
+                                            (click)="onBackToBeranda()">
+                                            <div class="card border-0 shadow-sm background-biru-muda">
+                                                <div class="card-body p-1">
+                                                    <h5 class="text-white mb-0">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                                            <h2 class="text-biru-tua fw-bold mb-0">
+                                                {{
+                                                Mode === 'Pendaftaran' ? ChoosenLoket.nama_loket_pelayanan :
+                                                ChoosenLoket['nama_poli']
+                                                }}
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Text Sedang Melayani -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-0">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                                            <h4 class="text-abu-muda mb-0">Sedang Melayani</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Text No. Antrian -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mb-2">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                                            <h3 class="text-biru-tua fw-bold mb-0">NO. ANTRIAN</h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card No. Antrian Saat Ini -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                                            <div class="row justify-content-center">
+                                                <div class=" col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <app-secondary-card>
+                                                        <p class="textNoAntrianSaatIni mb-0">
+                                                            {{ CurrentNoAntrian }}
+                                                        </p>
+                                                    </app-secondary-card>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Text Waktu Pelayanan -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-0 text-center">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                                            <h4 class="text-biru-tua">Waktu Pelayanan</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Timer Waktu Pelayanan -->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                                            <h3 id="timerWaktuPelayanan" class="text-biru-tua fw-bold">
+                                                00:00:00
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons Div's -->
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <div class="row" style="gap: 20px">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <select class="form-select" aria-label="Default select example" [(ngModel)]="SelectedJenisPelayanan"
+                        (change)="handleChangeJenisPelayanan($event)">
+                        <option selected [value]="0">Pilih Jenis Antrian</option>
+                        <option *ngFor="let item of JenisPelayanan$ | async" [value]="item.id_jenis_loket_pelayanan">
+                            {{ item.jenis_loket_pelayanan }}
+                        </option>
+                    </select>
+                </div>
+                <div *ngFor="let item of Action" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <app-button-card [ButtonDisabled]="CurrentNoAntrian === '----'" [ButtonText]="item.caption"
+                        [ButtonIcon]="item.icon" (onClick)="onSwitchActionMethod(item)">
+                    </app-button-card>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Served -->
+    <div class="row justify-content-center align-items-center">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
+            <div class="card border-top-biru-muda border-radius-20 shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h5 class="text-biru-tua ">
+                                Total Pelayanan
+                                <br>
+                                Hari Ini
+                            </h5>
+                            <h5 class="text-biru-tua mb-0 fw-bold">
+                                {{ TotalPelayanan }}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
+            <div class="card border-top-biru-muda border-radius-20 shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h5 class="text-biru-tua ">
+                                Sisa Antrian
+                                <br>
+                                BPJS
+                            </h5>
+                            <h5 class="text-biru-tua mb-0 fw-bold">
+                                {{ SisaAntrianBpjs }}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
+            <div class="card border-top-biru-muda border-radius-20 shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h5 class="text-biru-tua ">
+                                Sisa Antrian<br>UMUM
+                            </h5>
+                            <h5 class="text-biru-tua mb-0 fw-bold">
+                                {{ SisaAntrianUmum }}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
+            <div class="card border-top-biru-muda border-radius-20 shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h5 class="text-biru-tua ">
+                                Sisa Antrian<br>IGD
+                            </h5>
+                            <h5 class="text-biru-tua mb-0 fw-bold">
+                                {{ SisaAntrianIgd }}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
+            <div class="card border-top-biru-muda border-radius-20 shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h5 class="text-biru-tua ">
+                                Sisa Antrian<br>
+                                <span style="font-size: 14px">
+                                    PENUNJANG
+                                </span>
+                            </h5>
+                            <h5 class="text-biru-tua mb-0 fw-bold">
+                                {{ SisaAntrianPenunjang }}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Antrian Ke Skip -->
+    <div *ngIf="AntrianTerlewati.length" class="row mt-3 pt-3" style="border-top: 1px dashed">
+        <div *ngFor="let item of AntrianTerlewati" class="col-2" style="cursor: pointer;"
+            (click)="handleClickAntrianTerlewati(item)">
+            <div class="card background-biru-muda border-0 shadow" style="border-radius: 15px;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <p class="mb-0 text-center text-white">
+                                {{ item.no_antrian }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!AntrianTerlewati.length" class="row mt-3 pt-3" style="border-top: 1px dashed">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h4 class="mb-0 text-center">
+                Tidak Ada Antrian Yang Terlewati
+            </h4>
+        </div>
+    </div>
+</app-layout-loket>

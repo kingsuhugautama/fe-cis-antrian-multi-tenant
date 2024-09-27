@@ -1,0 +1,320 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
+
+jobs:
+  build-development:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run:
+          name: Login to dockerhub
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+          name: Build dockerfile
+          command: |
+            docker build --no-cache -t dockerhiscis/antrian-pendaftaran-his:development-latest .
+      - run:
+          name: Push Docker Image
+          command: |
+            docker push dockerhiscis/antrian-pendaftaran-his:development-latest
+      - add_ssh_keys:
+          fingerprints:
+            - "ff:78:f1:c9:e9:45:cc:c8:ca:45:3b:3b:fb:74:5a:df"
+      - run:
+          name: Deploy app to server development
+          command: |
+            ssh -o StrictHostKeyChecking=no root@174.138.22.139 "cd /home/circle-deployment/antrian-pendaftaran-his/ && docker pull dockerhiscis/antrian-pendaftaran-his:development-latest && docker-compose up -d"
+
+  build-demo:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run:
+          name: Login to dockerhub
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+          name: Build dockerfile
+          command: |
+            docker build --no-cache -t dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 .
+      - run:
+          name: Push Docker Image
+          command: |
+            docker push dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1
+            docker tag dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 dockerhiscis/antrian-pendaftaran-his:demo-latest
+            docker push dockerhiscis/antrian-pendaftaran-his:demo-latest
+      - add_ssh_keys:
+          fingerprints:
+            - "82:92:b4:65:61:1d:5f:67:0b:63:63:6a:d1:09:a1:5e"
+      - run:
+          name: Deploy app to server demo
+          command: |
+            ssh -o StrictHostKeyChecking=no his-admin@134.209.102.123 "cd /home/his-admin/antrian-pendaftaran-his/ && ./deploy.sh"
+
+  build-bantar-gebang-development:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: xlarge
+    steps:
+      - run:
+          name: validate branch and repo
+          command: echo $CIRCLE_BRANCH && echo $CIRCLE_REPOSITORY_URL
+      - run:
+          name: checkout
+          command: git clone -b "$CIRCLE_BRANCH" "$CIRCLE_REPOSITORY_URL" .
+      - node/install:
+          install-yarn: false
+          node-version: "16.20.0"
+      - run:
+          name: list dir
+          command: ls
+      - run:
+          name: verify node version
+          command: node --version
+      - run:
+          name: install angular 15.2.0
+          command: npm install -g @angular/cli@15.2.0
+      - run:
+          name: install package
+          command: npm install -f
+      - run:
+          name: npm version patch --no-git-tag-version
+          command: npm version patch --no-git-tag-version
+      - run:
+          name: node ./replace.build.js
+          command: node ./replace.build.js
+      - run:
+          name: build angular
+          command: ng build --configuration=production --output-hashing=all
+      - run:
+          name: Login to dockerhub
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+          name: Build dockerfile
+          command: |
+            docker build --no-cache -t dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 .
+      - run:
+          name: Push Docker Image
+          command: |
+            docker push dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1
+            docker tag dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 dockerhiscis/antrian-pendaftaran-his:bantar-gebang-development-latest
+            docker push dockerhiscis/antrian-pendaftaran-his:bantar-gebang-development-latest
+      - add_ssh_keys:
+          fingerprints:
+            - "d7:fa:b6:1b:6e:fc:2e:6c:04:ba:2a:05:54:52:dd:4e"
+      - run:
+          name: Deploy app to server demo
+          command: |
+            ssh -o StrictHostKeyChecking=no his-admin@174.138.30.30 "cd /home/his-admin/deployer/ && ./deploy-frontend-antrian-his.sh"
+
+  build-bantar-gebang-production:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: medium
+    steps:
+      - run:
+          name: validate branch and repo
+          command: echo $CIRCLE_BRANCH && echo $CIRCLE_REPOSITORY_URL
+      - run:
+          name: checkout
+          command: git clone -b "$CIRCLE_BRANCH" "$CIRCLE_REPOSITORY_URL" .
+      - node/install:
+          install-yarn: false
+          node-version: "16.20.0"
+      - run:
+          name: list dir
+          command: ls
+      - run:
+          name: verify node version
+          command: node --version
+      - run:
+          name: install angular 15.2.0
+          command: npm install -g @angular/cli@15.2.0
+      - run:
+          name: install package
+          command: npm install -f
+      - run:
+          name: npm version patch --no-git-tag-version
+          command: npm version patch --no-git-tag-version
+      - run:
+          name: node ./replace.build.js
+          command: node ./replace.build.js
+      - run:
+          name: build angular
+          command: ng build --configuration=production --output-hashing=all
+      - run:
+          name: Login to dockerhub
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+          name: Build dockerfile
+          command: |
+            docker build --no-cache -t dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 .
+      - run:
+          name: Push Docker Image
+          command: |
+            docker push dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1
+            docker tag dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 dockerhiscis/antrian-pendaftaran-his:bantar-gebang-production-latest
+            docker push dockerhiscis/antrian-pendaftaran-his:bantar-gebang-production-latest
+      - add_ssh_keys:
+          fingerprints:
+            - "97:41:d7:a6:ba:c2:c3:cb:3a:32:51:35:8d:79:26:a8"
+      - run:
+          name: Deploy app to server demo
+          command: |
+            ssh -o StrictHostKeyChecking=no his-admin@103.171.83.234 "cd deployer/ && ./deploy-frontend-antrian-his.sh"
+
+  build-jatisampurna-production:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: xlarge
+    steps:
+      - run:
+          name: validate branch and repo
+          command: echo $CIRCLE_BRANCH && echo $CIRCLE_REPOSITORY_URL
+      - run:
+          name: checkout
+          command: git clone -b "$CIRCLE_BRANCH" "$CIRCLE_REPOSITORY_URL" .
+      - node/install:
+          install-yarn: false
+          node-version: "16.20.0"
+      - run:
+          name: list dir
+          command: ls
+      - run:
+          name: verify node version
+          command: node --version
+      - run:
+          name: install angular 15.2.0
+          command: npm install -g @angular/cli@15.2.0
+      - run:
+          name: install package
+          command: npm install -f
+      - run:
+          name: npm version patch --no-git-tag-version
+          command: npm version patch --no-git-tag-version
+      - run:
+          name: node ./replace.build.js
+          command: node ./replace.build.js
+      - run:
+          name: build angular
+          command: ng build --configuration=production --output-hashing=all
+      - run:
+          name: Login to dockerhub
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+          name: Build dockerfile
+          command: |
+            docker build --no-cache -t dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 .
+      - run:
+          name: Push Docker Image
+          command: |
+            docker push dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1
+            docker tag dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 dockerhiscis/antrian-pendaftaran-his:jatisampurna-production-latest
+            docker push dockerhiscis/antrian-pendaftaran-his:jatisampurna-production-latest
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:lriG1/0Y6GfXzRCFWuoe6KQ3x/asa+IieJfJpe+3k5s"
+      - run:
+          name: Deploy app to Jatisampurna Production
+          command: |
+            ssh -o StrictHostKeyChecking=no his-admin@103.24.149.107 "cd /home/his-admin/deployer/ && ./deploy-frontend-antrian-his.sh"
+
+  build-jatisampurna-development:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: xlarge
+    steps:
+      - run:
+          name: validate branch and repo
+          command: echo $CIRCLE_BRANCH && echo $CIRCLE_REPOSITORY_URL
+      - run:
+          name: checkout
+          command: git clone -b "$CIRCLE_BRANCH" "$CIRCLE_REPOSITORY_URL" .
+      - node/install:
+          install-yarn: false
+          node-version: "16.20.0"
+      - run:
+          name: list dir
+          command: ls
+      - run:
+          name: verify node version
+          command: node --version
+      - run:
+          name: install angular 15.2.0
+          command: npm install -g @angular/cli@15.2.0
+      - run:
+          name: install package
+          command: npm install -f
+      - run:
+          name: npm version patch --no-git-tag-version
+          command: npm version patch --no-git-tag-version
+      - run:
+          name: node ./replace.build.js
+          command: node ./replace.build.js
+      - run:
+          name: build angular
+          command: ng build --configuration=production --output-hashing=all
+      - run:
+          name: Login to dockerhub
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+          name: Build dockerfile
+          command: |
+            docker build --no-cache -t dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 .
+      - run:
+          name: Push Docker Image
+          command: |
+            docker push dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1
+            docker tag dockerhiscis/antrian-pendaftaran-his:$CIRCLE_SHA1 dockerhiscis/antrian-pendaftaran-his:jatisampurna-development-latest
+            docker push dockerhiscis/antrian-pendaftaran-his:jatisampurna-development-latest
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:aVIfSgyqMSPHHhswD8cZVXB3VffPDSuA2kmGqFqAg+M"
+      - run:
+          name: Deploy app to Jatisampurna Development
+          command: |
+            ssh -o StrictHostKeyChecking=no his-admin@134.209.104.112 "cd /home/his-admin/deployer/ && ./deploy-frontend-antrian-his.sh"
+
+workflows:
+  basic-workflow:
+    jobs:
+      - build-development:
+          filters:
+            branches:
+              only:
+                - development
+      - build-demo:
+          filters:
+            branches:
+              only:
+                - demo
+      - build-bantar-gebang-development:
+          filters:
+            branches:
+              only:
+                - bantar-gebang-development
+      - build-bantar-gebang-production:
+          filters:
+            branches:
+              only:
+                - bantar-gebang-production
+      - build-jatisampurna-development:
+          filters:
+            branches:
+              only:
+                - jatisampurna-development
+      - build-jatisampurna-production:
+          filters:
+            branches:
+              only:
+                - jatisampurna-production

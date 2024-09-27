@@ -1,0 +1,36 @@
+<app-layout>
+    <div class="row px-0 mx-0 rowCetakTiket" data-aos="fade-right">
+        <!-- Heading -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+            <app-heading [heading]="'Menu Antrian Klinik '+clinicnya"></app-heading>
+        </div>
+
+        <!-- Jenis Pendaftaran -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+            <div class="row justify-content-center mb-0 cursor-pointer">
+                <div class="{{ screenClass }}">
+                    <div class="card shadow border-left-abu-muda background-biru-muda" (click)="onChooseMenu(Menu[0])">
+                        <div class="card-body" style="border-radius: 15px;">
+                            <p class="jenisAntrian text-center text-white mb-0">
+                                {{ Menu[0].caption }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center mb-0 cursor-pointer">
+                <div class="{{ screenClass }}" *ngFor="let item of Menu | slice: 1; let i = index">
+                    <div class="card shadow border-left-abu-muda background-biru-muda" (click)="onChooseMenu(item)">
+                        <div class="card-body" style="border-radius: 15px;">
+                            <p class="jenisAntrian text-center text-white mb-0">
+                                {{ item.caption }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-modal-pilih-poli #ModalPilihPoli></app-modal-pilih-poli>
+</app-layout>

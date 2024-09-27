@@ -1,0 +1,25 @@
+.cardLayout {
+  height: calc(100vh - 8rem);
+  overflow-y: auto;
+}
+
+section.layoutDisplay {
+  background-image: url("../../../assets/image/image-background.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 1919.98px) {
+  .cardLayout {
+    height: calc(100vh - 10rem);
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 1199.98px) and (orientation: portrait) {
+  .cardLayout {
+    height: calc(100vh - 10rem);
+    overflow-y: auto;
+  }
+}

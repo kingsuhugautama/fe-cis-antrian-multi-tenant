@@ -1,0 +1,120 @@
+p.textOtherNamaLoket {
+  font-size: 4rem;
+  text-align: center;
+  font-weight: 600;
+  color: white;
+  background-color: var(--hitam) !important;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+p.textOtherJenisLoket {
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: 600;
+  color: white;
+  background-color: var(--hitam) !important;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+p.textOtherNoAntrian {
+  font-size: 5.5rem;
+  text-align: center;
+  font-weight: 600;
+  color: var(--biru-muda);
+  text-shadow: 2px 2px var(--biru-tua), 2px 2px var(--biru-tua),
+    2px 2px var(--biru-tua), 2px 2px var(--biru-tua);
+  background-color: white;
+}
+
+.rowRunningText {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--hitam);
+}
+
+@media (max-width: 1366.98px) and (orientation: landscape) {
+  p.textOtherNamaLoket {
+    font-size: 2.5rem;
+  }
+
+  p.textOtherJenisLoket {
+    font-size: 2rem;
+  }
+
+  p.textOtherNoAntrian {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 1919.98px) and (max-width: 2132.98px) {
+  p.textOtherNamaLoket {
+    font-size: 3.5rem;
+  }
+
+  p.textOtherJenisLoket {
+    font-size: 3.25rem;
+  }
+
+  p.textOtherNoAntrian {
+    font-size: 5.5rem;
+  }
+}
+
+@media (min-width: 2133px) and (max-width: 2399.98px) {
+  p.textOtherNamaLoket {
+    font-size: 4rem;
+  }
+
+  p.textOtherJenisLoket {
+    font-size: 3.5rem;
+  }
+
+  p.textOtherNoAntrian {
+    font-size: 6.5rem;
+  }
+}
+
+@media (min-width: 2400px) and (max-width: 2559.98px) {
+  p.textOtherNamaLoket {
+    font-size: 4.5rem;
+  }
+
+  p.textOtherJenisLoket {
+    font-size: 4rem;
+  }
+
+  p.textOtherNoAntrian {
+    font-size: 7rem;
+  }
+}
+
+@media (min-width: 2560px) and (max-width: 2878.98px) {
+  p.textOtherNamaLoket {
+    font-size: 4.5rem;
+  }
+
+  p.textOtherJenisLoket {
+    font-size: 4rem;
+  }
+
+  p.textOtherNoAntrian {
+    font-size: 7.5rem;
+  }
+}
+
+@media (min-width: 2880px) and (max-width: 3839.98px) {
+  p.textOtherNamaLoket {
+    font-size: 5rem;
+  }
+
+  p.textOtherJenisLoket {
+    font-size: 5rem;
+  }
+
+  p.textOtherNoAntrian {
+    font-size: 8.5rem;
+  }
+}
