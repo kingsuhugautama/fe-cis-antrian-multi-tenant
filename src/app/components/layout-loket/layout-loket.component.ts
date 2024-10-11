@@ -26,7 +26,7 @@ export class LayoutLoketComponent implements OnInit, AfterViewInit {
         private loketPendaftaranService: LoketPendaftaranService,
         private router:Router
     ) { }
-
+//
     ngOnInit(): void {
     }
 
