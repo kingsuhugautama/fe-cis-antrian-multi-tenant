@@ -336,7 +336,7 @@ jobs:
             docker push dockerhiscis/antrian-pendaftaran-his:fe-antrian-cis-multi-tenant-latest
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:aVIfSgyqMSPHHhswD8cZVXB3VffPDSuA2kmGqFqAg+M"
+            - "SHA256:mFFo96GsvTZ9QibIzSMIA0ESehKw2h4ASkC3T/+munE"
       - run:
           name: Deploy app to main
           command: |
