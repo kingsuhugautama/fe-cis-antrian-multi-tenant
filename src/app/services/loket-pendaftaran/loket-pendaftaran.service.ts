@@ -83,7 +83,7 @@ export class LoketPendaftaranService {
     }
 
     getListAntrianPerJenisPelayanan(id_jenis_loket_pelayanan: number): Observable<HttpResponseModel> {
-        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_LIST_ANTRIAN_PER_JENIS_LOKET_PENDAFTARAN + id_jenis_loket_pelayanan);
+        return this.httpOperationService.defaultGetRequest(this.API_CONFIG.GET_ANTRIAN_WAITING+"/"+ id_jenis_loket_pelayanan);
     }
 
     getSisaAntrianPerJenisPelayanan(id_jenis_loket_pelayanan: number): Observable<HttpResponseModel> {

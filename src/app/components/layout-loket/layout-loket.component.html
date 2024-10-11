@@ -16,11 +16,14 @@
                                 </p>
                             </div>
                             <div class="col-4">
-                                <p class="text-white mb-0 cursor-pointer" style="font-size: 1.25rem;"
-                                    (click)="onGoBack()">
-                                   <i class="fas fa-arrow-left text-white"></i>
-                                    Go Back
+                                <div class="row gap-3" *ngFor="let item of ButtonNav">
+                                    <p [id]="item.id" class="text-white mb-0 cursor-pointer" style="font-size: 1.25rem;"
+                                    (click)="onClickButtonNav(item.id)">
+                                   <i [class]="item.icon"></i>
+                                    {{item.label}}
                                 </p>
+                                </div>
+                               
                             </div>
                         </div>
                     </div>

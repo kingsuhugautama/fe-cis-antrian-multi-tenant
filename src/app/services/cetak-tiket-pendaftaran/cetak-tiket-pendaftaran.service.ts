@@ -83,7 +83,7 @@ export class CetakTiketPendaftaranService {
     }
 
     onGetAllAntrianTerlewati(id_jenis_loket_pelayanan: number) {
-        return this.httpOperationService.defaultGetRequest(this.API.GET_ANTRIAN_TERLEWATI + id_jenis_loket_pelayanan);
+        return this.httpOperationService.defaultGetRequest(this.API.GET_ANTRIAN_TERLEWATI+'/'+id_jenis_loket_pelayanan);
     }
 
     getCheckIn(data:any):Observable<any>{

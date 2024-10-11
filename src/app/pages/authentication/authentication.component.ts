@@ -19,6 +19,7 @@ export class AuthenticationComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        localStorage.clear()
         this.onSetFormAuthenticationAttribute();
     }
 

@@ -28,7 +28,7 @@ export class LoketPendaftaranComponent implements OnInit, AfterViewInit, OnDestr
 
     UserData: IAuthenticationResponseModel;
 
-    Action: ActionModel[] = [];
+    Action: any[] = [];
 
     TimerRef!: HTMLElement;
     TimerRunning: boolean = false;
@@ -79,12 +79,12 @@ export class LoketPendaftaranComponent implements OnInit, AfterViewInit, OnDestr
 
         if (this.Mode === "Pendaftaran") {
             this.Action = [
-                { id: 'next', icon: 'forward', caption: 'Next' },
-                { id: 'call', icon: 'volume-up', caption: 'Call' },
+                { id: 8, icon: 'forward', caption: 'Next' },
+                { id: 3, icon: 'volume-up', caption: 'Call' },
                 // { id: 'recall', icon: 'microphone-alt', caption: 'Recall' },
                 // { id: 'transfer', icon: 'upload', caption: 'Transfer' },
-                { id: 'start', icon: 'play', caption: 'Start' },
-                { id: 'stop', icon: 'stop', caption: 'Stop' },
+                { id: 6, icon: 'play', caption: 'Start' },
+                { id: 7, icon: 'stop', caption: 'Stop' },
             ];
         } else {
             this.Action = [
@@ -141,21 +141,21 @@ export class LoketPendaftaranComponent implements OnInit, AfterViewInit, OnDestr
             });
     }
 
-    onSwitchActionMethod(action: ActionModel): void {
+    onSwitchActionMethod(action: any): void {
         if (this.CurrentNoAntrian == "----") {
             this.utilityService.onShowingCustomAlert('warning', 'Oops', 'No. Antrian Habis');
         } else {
             switch (action.id) {
-                case 'next':
+                case 8:
                     this.onNextPelayanan();
                     break;
-                case 'start':
+                case 6:
                     this.onStartPelayanan();
                     break;
-                case 'call':
+                case 3:
                     this.onCallPelayanan(this.CurrentNoAntrian);
                     break;
-                case 'stop':
+                case 7:
                     this.onStopPelayanan();
                     break;
             }

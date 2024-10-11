@@ -32,6 +32,11 @@ export class PilihLoketComponent implements OnInit, AfterViewInit {
 
     UrlRedirect: string;
 
+    ButtonNav:any[] = [
+        {id:'back',label:'Go Back',icon:'fas fa-arrow-left'}
+    ]
+
+
     constructor(
         private router: Router,
         private utilityService: UtilityService,
@@ -44,6 +49,13 @@ export class PilihLoketComponent implements OnInit, AfterViewInit {
         this.UrlRedirect = this.Mode == "Pendaftaran" ? "/loket-pendaftaran" : "/loket-poliklinik";
 
         this.onGetAvailableLoket(this.Mode);
+    }
+
+    onClickButtonNav(buttonId:any):void{
+        console.log(buttonId)
+        if(buttonId == 'back'){
+            this.router.navigateByUrl('authentication')
+        }
     }
 
     ngAfterViewInit(): void {
@@ -95,7 +107,7 @@ export class PilihLoketComponent implements OnInit, AfterViewInit {
         const parameter: IPostChooseLoketModel = {
             id_loket_pelayanan: loket.id_loket_pelayanan,
             // user_pelayanan: this.UserData.id_user
-            user_pelayanan:2
+            // user_pelayanan:2
         };
 
         this.pilihLoketService.onChooseLoketPendaftaran(parameter)

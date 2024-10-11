@@ -288,9 +288,23 @@ export class CetakTiketPendaftaranComponent implements OnInit {
 
     onChooseJenisAntrian(pelayanan: IJenisPelayananModel): void {
         this.JenisAntrian = pelayanan;
+        console.log(this.JenisAntrian)
+        if (pelayanan.jenis_loket_pelayanan == 'UMUM') {
+            // this.ModalPilihPoliAndDokterComps.onOpeningModal();
+                this.cetakTiketPendaftaranService
+                    .onGetJumlahAntrian(this.JenisAntrian.id_jenis_loket_pelayanan)
+                    .subscribe((result) => {
+                        this.NomorAntrian = result.data;
 
-        if (pelayanan.jenis_loket_pelayanan == 'UMUM (POLI)') {
-            this.ModalPilihPoliAndDokterComps.onOpeningModal();
+                        setTimeout(() => {
+                            if (this.JenisAntrian.id_jenis_loket_pelayanan == 2) {
+                                this.ResultNoRujukan = true;
+                            } else {
+                                this.showContent = true;
+                            }
+                        }, 250);
+                    });
+            this.JenisAntrian.jenis_loket_pelayanan = 'UMUM'
         }
 
         if (pelayanan.jenis_loket_pelayanan == 'BPJS') {

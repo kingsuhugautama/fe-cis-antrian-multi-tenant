@@ -63,7 +63,8 @@ export class PilihLoketService {
     }
 
     onChooseLoketPendaftaran(parameter: IPostChooseLoketModel): Observable<HttpResponseModel> {
-        return this.httpOperationService.defaultPostRequest(this.API_INDEX.POST_CHOOSE_LOKET, parameter)
+        // return this.httpOperationService.defaultPostRequest(this.API_INDEX.POST_CHOOSE_LOKET, parameter)
+        return this.httpOperationService.defaultPostRequest(`${environment.webApiPis}AntrianPendaftaran/InsertUserLoketPelayanan`,parameter)
         
     }
 

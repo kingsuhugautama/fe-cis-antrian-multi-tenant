@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { IAuthenticationResponseModel } from 'src/app/models/authentication.model';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -15,6 +15,10 @@ export class LayoutLoketComponent implements OnInit, AfterViewInit {
     UserName: string = "";
 
      LogoImageClass: string = "mx-auto";
+
+     @Input('ButtonNav') ButtonNav?:any = []
+
+     @Output('handleClickButtonNav') handleClickButtonNav = new EventEmitter()
 
     constructor(
         public utilityService: UtilityService,
@@ -33,6 +37,9 @@ export class LayoutLoketComponent implements OnInit, AfterViewInit {
         }, 1);
     }
 
+    onClickButtonNav(args:any):void{
+        this.handleClickButtonNav.emit(args)
+    }
 
     onClickButtonLogout(): void {
         const choosenLoket = JSON.parse(localStorage.getItem('ChoosenLoket') as any);

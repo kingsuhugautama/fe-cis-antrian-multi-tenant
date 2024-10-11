@@ -40,7 +40,7 @@ export class GetAvailableLoketModel implements HttpResponseModel {
 
 export interface IPostChooseLoketModel {
     id_loket_pelayanan: number;
-    user_pelayanan: number;
+    user_pelayanan?: number;
 }
 
 export interface IPostChooseLoketPoliklinikModel {

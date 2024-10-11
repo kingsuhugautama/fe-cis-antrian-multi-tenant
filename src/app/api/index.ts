@@ -3,8 +3,8 @@ import { environment } from "src/environments/environment";
 export const POST_AUTHENTICATION = `${environment.webApiPis}` + 'Authentication/Login';
 export const POST_AUTH_TENANT = `${environment.webApiPis}` + 'Authentication/LoginTenant';
 export const PUT_LOG_OUT = `${environment.webApiPis}` + 'Authentication/SetLogoutTime';
+export const GET_ALL_JENIS_PELAYANAN = `${environment.webApiPis}AntrianPendaftaran/JenisLoketPelayanan`;
 
-export const GET_ALL_JENIS_PELAYANAN = `${environment.webApiAntrian}/antrian-pendaftaran/GetAllJenisPelayanan`;
 
 // ** ANTRIAN PENDAFTARAN
 export const GET_NO_ANTRIAN = `${environment.webApiAntrian}/antrian-pendaftaran/GetNoAntrian`;
@@ -17,14 +17,16 @@ export const GET_MINUTES_PELAYANAN = `${environment.webApiAntrian}/antrian-penda
 
 export const GET_AVAILABLE_LOKET = `${environment.webApiAntrian}/antrian-pendaftaran/GetAvailableLoket`;
 export const POST_CHOOSE_LOKET = `${environment.webApiAntrian}/antrian-pendaftaran/ChooseLoket`;
-export const POST_UPDATE_STATUS_LOKET_TO_IDLE = `${environment.webApiAntrian}/antrian-pendaftaran/UpdateStatusLoketToIdle`;
+export const POST_UPDATE_STATUS_LOKET_TO_IDLE = `${environment.webApiPis}AntrianPendaftaran/CancelUserLoketPelayanan`;
 export const GET_NO_ANTRIAN_FOR_LOKET = `${environment.webApiAntrian}/antrian-pendaftaran/GetNoAntrianForLoket`;
 export const POST_CALL_NO_ANTRIAN = `${environment.webApiAntrian}/antrian-pendaftaran/CallNoAntrian`;
 export const POST_START_PELAYANAN_NO_ANTRIAN = `${environment.webApiAntrian}/antrian-pendaftaran/StartPelayananNoAntrian`;
 export const POST_FINISH_PELAYANAN_NO_ANTRIAN = `${environment.webApiAntrian}/antrian-pendaftaran/FinishPelayananNoAntrian`;
 export const GET_LIST_ANTRIAN_PER_JENIS_LOKET_PENDAFTARAN = `${environment.webApiAntrian}/antrian-pendaftaran/GetListAntrianPasien/`;
 export const GET_SISA_ANTRIAN_PER_JENIS_LOKET_PENDAFTARAN = `${environment.webApiAntrian}/antrian-pendaftaran/GetSisaAntrianPasienByIdJenisPelayanan/`;
-export const GET_ANTRIAN_TERLEWATI = `${environment.webApiAntrian}/antrian-pendaftaran/GetListAntrianTerlewati/`;
+export const GET_ANTRIAN_TERLEWATI = `${environment.webApiPis}AntrianPendaftaran/ListAntrianSkip`;
+
+export const GET_ANTRIAN_WAITING = `${environment.webApiPis}AntrianPendaftaran/ListAntrianWaiting`
 
 export const GET_QUEUE_CALL_PENDAFTARAN_FOR_DISPLAY = `${environment.webApiAntrian}/queue-call-pendaftaran/GetQueueCallPendaftaran`;
 export const DELETE_QUEUE_CALL_PENDAFTARAN_FOR_DISPLAY = `${environment.webApiAntrian}/queue-call-pendaftaran/DeleteQueueCallPendaftaran/`;
